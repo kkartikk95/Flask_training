@@ -1,6 +1,7 @@
 from App import app
+from flask import render_template
 
 @app.route("/") # These are called function decorators
 @app.route("/index")
 def index():
-    return "<h2>Hello Flask</h2>"
+    return render_template("index.html")
