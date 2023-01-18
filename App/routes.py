@@ -13,7 +13,7 @@ def login():
 
 @app.route("/courses") # Can stack how many ever routing patterns as we want in the same format
 def courses():
-    return render_template("course.html", login=True)
+    return render_template("courses.html", login=True)
 
 @app.route("/register") # Can stack how many ever routing patterns as we want in the same format
 def register():
