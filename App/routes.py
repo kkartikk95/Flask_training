@@ -12,7 +12,8 @@ def login():
     return render_template("login.html", login=True)
 
 @app.route("/courses") # Can stack how many ever routing patterns as we want in the same format
-def courses():
+@app.route("/courses/<term>")
+def courses(term = "Spring 2019"):
     courseData = [{"courseID":"1111","title":"PHP 101","description":"Intro to PHP",
                    "credits":3,"term":"Fall, Spring"}, {"courseID":"2222","title":"Java 1",
                     "description":"Intro to Java Programming","credits":4,"term":"Spring"},
@@ -22,7 +23,7 @@ def courses():
                   {"courseID":"5555","title":"Java 2","description":"Advanced Java Programming",
                    "credits":4,"term":"Fall"}]
 
-    return render_template("courses.html", courseData=courseData, courses=True)
+    return render_template("courses.html", courseData=courseData, courses=True, term=term)
 
 @app.route("/register") # Can stack how many ever routing patterns as we want in the same format
 def register():
