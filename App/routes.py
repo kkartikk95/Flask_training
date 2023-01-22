@@ -1,5 +1,5 @@
 from App import app
-from flask import render_template
+from flask import render_template, request
 
 @app.route("/") # These are called function decorators
 @app.route("/index")
@@ -12,7 +12,7 @@ def login():
     return render_template("login.html", login=True)
 
 @app.route("/courses") # Can stack how many ever routing patterns as we want in the same format
-@app.route("/courses/<term>")
+@app.route("/courses/<term>")# sending the term as a variable to the courses.html
 def courses(term = "Spring 2019"):
     courseData = [{"courseID":"1111","title":"PHP 101","description":"Intro to PHP",
                    "credits":3,"term":"Fall, Spring"}, {"courseID":"2222","title":"Java 1",
@@ -25,8 +25,15 @@ def courses(term = "Spring 2019"):
 
     return render_template("courses.html", courseData=courseData, courses=True, term=term)
 
-@app.route("/register") # Can stack how many ever routing patterns as we want in the same format
+@app.route("/register")
 def register():
     return render_template("register.html", register=True)
+
+@app.route("/enrollment", methods=["GET","POST"])
+def enrollment():
+    id = request.form.get('courseID')
+    title = request.form.get('title')
+    term = request.form.get('term')
+    return render_template("enrollment.html", enrollment=True, data={"id":id,"title":title,"term":term})
 
 
