@@ -1,6 +1,9 @@
 from App import app, db
-from flask import render_template, request, json, Response
+from flask import render_template, request, json, Response, redirect, flash
 from App.models import User,Course,Enrollment
+from App.forms import LoginForm,RegistrationForm
+
+
 courseData = [{"courseID": "1111", "title": "PHP 101", "description": "Intro to PHP",
                "credits": 3, "term": "Fall, Spring"},
               {"courseID": "2222", "title": "Java 1",
@@ -19,9 +22,16 @@ courseData = [{"courseID": "1111", "title": "PHP 101", "description": "Intro to 
 def index():
     return render_template("index.html", index=True)
 
-@app.route("/login") # Can stack how many ever routing patterns as we want in the same format
+@app.route("/login", methods=['GET','POST']) # Can stack how many ever routing patterns as we want in the same format
 def login():
-    return render_template("login.html", login=True)
+    form = LoginForm()
+    if form.validate_on_submit():
+        if request.form.get("email") == "test@uta.com":
+            flash("You are Successfully Logged in!","success")
+            return redirect("/index")
+        else:
+            flash("Please recheck credentials","danger")
+    return render_template("login.html", form=form, title="Login", login=True)
 
 @app.route("/courses") # Can stack how many ever routing patterns as we want in the same format
 @app.route("/courses/<term>")# sending the term as a variable to the courses.html
